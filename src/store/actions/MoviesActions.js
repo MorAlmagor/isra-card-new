@@ -13,3 +13,11 @@ export const removeMovieToFavorite = (movieID) => {
     payload: movieID
   };
 };
+
+export const updateMoviesData = (data) => {
+  return {
+    type: actionTypes.UPDATE_MOVIES_DATA,
+    payload: data
+    
+  };
+};

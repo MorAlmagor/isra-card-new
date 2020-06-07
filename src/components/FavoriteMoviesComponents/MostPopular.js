@@ -18,6 +18,7 @@ import { MDTbPosterBaseUrl, theMovieDbKey } from '../../utilities/srtings/theMov
 const MostPopular = ({ navigation }) => {
   const [movies, setMoviesData] = useState(false);
 
+  // Check temporary database and pull from server
   if (movies === false) {
     axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${theMovieDbKey}&language=en-US&page=1`)
       .then((res) => {

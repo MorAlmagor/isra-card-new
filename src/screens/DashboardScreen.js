@@ -1,17 +1,33 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { View, Text, StyleSheet, Image, Button, AsyncStorage } from "react-native";
 import * as Device from '../utilities/styles/general';
 import * as Colors from '../utilities/styles/colors';
 import { removeUserDetail } from '../store/actions/userActions';
+import { updateMoviesData } from '../store/actions/MoviesActions';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
-const DashboardScreen = ({ navigation, user, LogoutUser }) => {
-  
+const DashboardScreen = ({ navigation, user, LogoutUser, updateMoviesData }) => {
+
+  useEffect(() => {
+    // Loading favorite movies from server
+    axios.get(`https://isracardtest-c3c0f.firebaseio.com/FavoriteMovies/.json`)
+    .then((res) => {
+      updateMoviesData(res.data)
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
+  // Username conversion function from capital letters to first letter capital to properly display the name
   const reNameUser = (str) => {  
     let res = str.toLowerCase();
     return res.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
   } 
 
+  
+  // A function that returns a main page and deletes user information from the local memory
   const logOutUser = () => {
     LogoutUser();
     AsyncStorage.setItem('loginUserAutoLocal', JSON.stringify(false));
@@ -21,9 +37,7 @@ const DashboardScreen = ({ navigation, user, LogoutUser }) => {
   let userName = 'User'
   if (user.userName) {
     userName = reNameUser(user.userName)
-  } else {
-
-  } 
+  }
 
   return (
 
@@ -113,6 +127,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    updateMoviesData: (data) => dispatch(updateMoviesData(data)),
     LogoutUser: () => dispatch(removeUserDetail()),
   };
 };

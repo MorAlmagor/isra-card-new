@@ -2,30 +2,29 @@ import React, { useState, useEffect } from "react";
 import { Text, StyleSheet, View, TextInput, TouchableOpacity, FlatList, Dimensions, Image } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { addMovieToFavorite } from '../store/actions/MoviesActions'
 import { Rating } from 'react-native-ratings';
 import * as Device from '../utilities/styles/general';
 import * as Colors from '../utilities/styles/colors';
 import { MDTbPosterBaseUrl } from '../utilities/srtings/theMovieDB';
 
-
 const FavoritesScreen = ({ FavoriteMoviesArr, navigation }) => {
+  
   const [favoriteMoviesState, setFavoriteMovies] = useState(FavoriteMoviesArr);
   const [textValue, onChangeText] = useState('');
 
   navigation.addListener('didFocus', () => {
     setFavoriteMovies(FavoriteMoviesArr);
   });
-  
+
+  // Function for searching movie by names
   const searchMode = (text) => {
     const tempMoviesSearchArr = [];
-
     FavoriteMoviesArr.forEach((movie) => {
       if (movie.item.title.toLowerCase().includes(text.toLowerCase())) {
         tempMoviesSearchArr.push(movie);
       }
     });
-
+    // Saving the movies in a temporary 
     setFavoriteMovies(tempMoviesSearchArr);
   }
 
@@ -36,7 +35,6 @@ const FavoritesScreen = ({ FavoriteMoviesArr, navigation }) => {
       <Text style={styles.noMoviesAddText}>Go Back And Find Some Movies</Text>
     </View>
   )
-
 
   return (
     <View style={styles.screenContainer}>

@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet, View, FlatList, Dimensions, Image, TouchableOpacity, ScrollView } from "react-native";
 import * as Device from '../../utilities/styles/general';
 import * as Colors from '../../utilities/styles/colors';
-
+// A screen to keep the UI design while the movies are loading from the server
 const LoadingMovies = () => {
 
   return (

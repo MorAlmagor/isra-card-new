@@ -6,6 +6,7 @@ import {addMovieToFavorite, removeMovieToFavorite} from '../../store/actions/Mov
 
 const AddListButton = ({data, FavoriteMoviesArr, OnAddToFavorite, OnRemoveFavorite}) => {
 
+  // Checking whether the movie is on a favorites list & change the button
   const [bool, setBool] = useState(false);
   let favoriteMovieArrLength = FavoriteMoviesArr.length
   for(let i = 0; i < favoriteMovieArrLength; i++) {

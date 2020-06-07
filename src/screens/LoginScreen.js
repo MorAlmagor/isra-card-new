@@ -11,7 +11,8 @@ import * as Colors from '../utilities/styles/colors';
 const LoginScreen = ({ navigation, OnAddUserDetails }) => {
   const [loginAuto, setLoginAuto] = useState(false)
   const [click, setClick] = useState(false)
-  
+
+  // Automatic login and check-in by user markup
   AsyncStorage.getItem('loginUserAutoLocal').then((loginBool) => {
     const bool = JSON.parse(loginBool);
 
@@ -31,11 +32,13 @@ const LoginScreen = ({ navigation, OnAddUserDetails }) => {
     }
   })
 
+  // Login to Google Account
   const handleSignInWithGoogle = () => {
     firebaseUtils.signInWithGoogle();
     checkIfLoggedIn();
   };
 
+  // Check if the user has logged in earlier
   const checkIfLoggedIn = () => {
     firebase.auth().onAuthStateChanged((result) => {
       const userData = result.providerData[0];
@@ -47,6 +50,7 @@ const LoginScreen = ({ navigation, OnAddUserDetails }) => {
     });
   };
 
+  // A function of locally saving the user's choice for automatic login
   const autologinHandler = () => {
     if (!loginAuto) {
       AsyncStorage.setItem('loginUserAutoLocal', JSON.stringify(true));
